@@ -8,14 +8,15 @@ if not %errorlevel% == 0 (
 )
 
 if not %errorlevel% == 0 (
-    echo COMPILE-INFO: cl compiler is required. Install Microsoft Visual Studio 2022 and make sure vcvarsall.bat is in your PATH
+    echo COMPILE-ERROR: cl compiler is required. Install Microsoft Visual Studio 2022 and make sure vcvarsall.bat is in your PATH
+    exit /b 1
 )
 
 if exist build call rmdir /s /q build
 
 mkdir build
 
-call cl code\*.c /Fe:build\ray_tracer.exe >nul 2>nul
+call cl /nologo /Wall code\*.c /Fe:build\ray_tracer.exe /std:c11
 
 call del *.obj
 
