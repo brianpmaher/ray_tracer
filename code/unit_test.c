@@ -7,10 +7,12 @@
 
 static TestFunction unitTests[MAX_UNIT_TESTS];
 static int unitTestsCount = 0;
+static int numAssertions = 0;
 
 void RunUnitTests(void)
 {
     int numTestsPassed = 0;
+    numAssertions = 0;
 
     for (int i = 0; i < unitTestsCount; i++)
     {
@@ -23,6 +25,7 @@ void RunUnitTests(void)
     SetTraceLogLevel(LOG_DEBUG);
 
     TraceLog(LOG_DEBUG, "%d / %d tests passed.", numTestsPassed, unitTestsCount);
+    TraceLog(LOG_DEBUG, "%d assertions executed.", numAssertions);
 }
 
 void AddUnitTest(TestFunction testFunction)
@@ -38,6 +41,8 @@ void AddUnitTest(TestFunction testFunction)
 
 bool _AssertTrue(char *file, int line, bool value)
 {
+    numAssertions++;
+
     if (value == false)
     {
         TraceLog(LOG_ERROR, "Expected false to be true (%s::%d)", file, line);
@@ -49,6 +54,8 @@ bool _AssertTrue(char *file, int line, bool value)
 
 bool _AssertFalse(char *file, int line, bool value)
 {
+    numAssertions++;
+
     if (value == true)
     {
         TraceLog(LOG_ERROR, "Expected true to be false (%s::%d)", file, line);
