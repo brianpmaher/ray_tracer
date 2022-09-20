@@ -5,6 +5,24 @@
 #include "./tuple.h"
 #include "./trace_log.h"
 
+static void RunAllUnitTests(void);
+static void RunCannonSim(void);
+
+int main(void)
+{
+    RunAllUnitTests();
+    RunCannonSim();
+
+    return 0;
+}
+
+static void RunAllUnitTests(void)
+{
+    AddMathTests();
+    AddTupleTests();
+    RunUnitTests();
+}
+
 typedef struct Projectile {
     Point position;
     Vector velocity;
@@ -22,14 +40,8 @@ static Projectile Tick(Environment environment, Projectile projectile)
     return projectile;
 }
 
-int main(void)
+static void RunCannonSim(void)
 {
-    AddMathTests();
-    AddTupleTests();
-    RunUnitTests();
-
-    // Sandbox
-
     Projectile projectile = {
         .position = CreatePoint(0.0f, 1.0f, 0.0f),
         .velocity = Normalize(CreateVector(1.0f, 1.0f, 0.0f)),
@@ -45,11 +57,8 @@ int main(void)
     int numTicks = 0;
     while (projectile.position.y > 0.0f)
     {
-        projectile = Tick(environment, projectile);
-        numTicks++;
+        projectile = Tick(environment, projectile); numTicks++;
         InfoLog("Projectile position: (%.2lf, %.2lf, %.2lf)", projectile.position.x, projectile.position.y, projectile.position.z);
     }
     InfoLog("Num ticks: %d", numTicks);
-
-    return 0;
 }
