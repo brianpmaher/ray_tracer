@@ -22,4 +22,4 @@ call cl /nologo /Wall /Fe:build\ray_tracer.exe /std:c11 code\*.c
 
 call del *.obj
 
-call build\ray_tracer.exe
+if %errorlevel% == 0 call build\ray_tracer.exe
