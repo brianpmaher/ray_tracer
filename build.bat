@@ -18,7 +18,7 @@ if exist build call rmdir /s /q build
 
 mkdir build
 
-call cl /nologo /Wall code\*.c /Fe:build\ray_tracer.exe /std:c11
+call cl /nologo /Wall /Fe:build\ray_tracer.exe /std:c11 code\*.c 
 
 call del *.obj
 
