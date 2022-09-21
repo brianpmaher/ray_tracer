@@ -10,7 +10,10 @@ static void RunCannonSim(void);
 
 int main(void)
 {
+#ifdef RUN_UNIT_TESTS
     RunAllUnitTests();
+#endif
+
     RunCannonSim();
 
     return 0;

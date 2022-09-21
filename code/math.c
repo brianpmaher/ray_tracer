@@ -1,4 +1,4 @@
-#pragma warning(disable: 5045)
+#pragma warning(disable: 5045) // Not bounds-checking.
 
 #include "./unit_test.h"
 #include "./math.h"

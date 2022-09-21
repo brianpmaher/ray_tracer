@@ -1,5 +1,13 @@
 @echo off
 
+rem ////////////////////////////////////////////////////////////////////////////////
+rem                                    Config
+rem ////////////////////////////////////////////////////////////////////////////////
+
+set runUnitTests=1
+
+rem ////////////////////////////////////////////////////////////////////////////////
+
 call cl >nul 2>nul
 
 if not %errorlevel% == 0 (
@@ -18,7 +26,10 @@ if exist build call rmdir /s /q build
 
 mkdir build
 
-call cl /nologo /Wall /Fe:build\ray_tracer.exe /std:c11 code\*.c 
+set defines=
+if %runUnitTests% == 1 set defines=/DRUN_UNIT_TESTS
+
+call cl /nologo /Wall /Fe:build\ray_tracer.exe /std:c11 code\*.c %defines%
 
 call del *.obj
 
