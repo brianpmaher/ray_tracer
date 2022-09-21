@@ -4,6 +4,7 @@
 #include "./unit_test.h"
 #include "./tuple.h"
 #include "./trace_log.h"
+#include "./canvas.h"
 
 static void RunAllUnitTests(void);
 static void RunCannonSim(void);
@@ -23,6 +24,7 @@ static void RunAllUnitTests(void)
 {
     AddMathTests();
     AddTupleTests();
+    AddCanvasTests();
     RunUnitTests();
 }
 
