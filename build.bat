@@ -29,7 +29,7 @@ mkdir build
 set defines=
 if %runUnitTests% == 1 set defines=/DRUN_UNIT_TESTS
 
-call cl /nologo /Wall /Fe:build\ray_tracer.exe /std:c11 code\*.c %defines%
+call cl /nologo /W3 /Fe:build\ray_tracer.exe /std:c11 code\*.c %defines%
 
 call del *.obj
 
