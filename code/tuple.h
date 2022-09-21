@@ -19,15 +19,27 @@ typedef Tuple Point;
 
 typedef Tuple Vector;
 
+typedef struct Color {
+    float r;
+    float g;
+    float b;
+} Color;
+
 inline bool TupleIsEqual(Tuple a, Tuple b)
 {
     return IsEqual(a.x, b.x) && IsEqual(a.y, b.y) && IsEqual(a.z, b.z) && IsEqual(a.w, b.w);
 }
 
-#define IsEqual(a, b)       \
-    _Generic((a),           \
-        float: IsEqual,     \
-        Tuple: TupleIsEqual \
+inline bool ColorIsEqual(Color a, Color b)
+{
+    return IsEqual(a.r, b.r) && IsEqual(a.g, b.g) && IsEqual(a.b, b.b);
+}
+
+#define IsEqual(a, b)        \
+    _Generic((a),            \
+        float: IsEqual,      \
+        Tuple: TupleIsEqual, \
+        Color: ColorIsEqual  \
     ) (a, b)
 
 inline bool TupleIsPoint(Tuple a)
@@ -54,19 +66,47 @@ inline Tuple CreateVector(float x, float y, float z)
     return (Tuple){ x, y, z, TUPLE_VECTOR_W };
 }
 
+inline Color Black(void)
+{
+    return (Color){ 0.0f, 0.0f, 0.0f };
+}
+
+inline Color White(void)
+{
+    return (Color){ 1.0f, 1.0f, 1.0f };
+}
+
 inline Tuple TupleAdd(Tuple a, Tuple b)
 {
     return (Tuple){ a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w };
 }
 
-#define Add TupleAdd
+inline Color ColorAdd(Color a, Color b)
+{
+    return (Color){ a.r + b.r, a.g + b.g, a.b + b.b };
+}
+
+#define Add(a, b)        \
+    _Generic((a),        \
+        Tuple: TupleAdd, \
+        Color: ColorAdd  \
+    ) (a, b)
 
 inline Tuple TupleSub(Tuple a, Tuple b)
 {
     return (Tuple){ a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w };
 }
 
-#define Sub TupleSub
+inline Color ColorSub(Color a, Color b)
+{
+    return (Color){ a.r - b.r, a.g - b.g, a.b - b.b };
+}
+
+#define Sub(a, b)        \
+    _Generic((a),        \
+        Tuple: TupleSub, \
+        Color: ColorSub  \
+    ) (a, b)
 
 inline Tuple PointZero(void)
 {
@@ -90,9 +130,25 @@ inline Tuple TupleMulScalar(Tuple a, float scalar)
     return (Tuple){ a.x * scalar, a.y * scalar, a.z * scalar, a.w * scalar };
 }
 
-#define MulScalar TupleMulScalar
+inline Color ColorMulScalar(Color a, float scalar)
+{
+    return (Color){ a.r * scalar, a.g * scalar, a.b * scalar };
+}
 
-#define Scale TupleMulScalar
+#define MulScalar(a, scalar)   \
+    _Generic((a),              \
+        Tuple: TupleMulScalar, \
+        Color: ColorMulScalar  \
+    ) (a, scalar)
+
+#define Scale MulScalar
+
+inline Color ColorMul(Color a, Color b)
+{
+    return (Color){ a.r * b.r, a.g * b.g, a.b * b.b };
+}
+
+#define Mul ColorMul
 
 inline Tuple TupleDivScalar(Tuple a, float scalar)
 {

@@ -22,6 +22,22 @@ Test(TupleIsEqual,
     AssertFalse(TupleIsEqual(a, b));
 })
 
+Test(ColorIsEqual,
+{
+    Color a = { 4.3f, -4.2f, 3.1f };
+    Color b = { 4.3f, -4.2f, 3.1f };
+    AssertTrue(ColorIsEqual(a, b));
+
+    b = (Color){ 3.3f, -4.2f, 3.1f };
+    AssertFalse(ColorIsEqual(a, b));
+
+    b = (Color){ 4.3f, -5.2f, 3.1f };
+    AssertFalse(ColorIsEqual(a, b));
+
+    b = (Color){ 4.3f, -4.2f, 3.5f };
+    AssertFalse(ColorIsEqual(a, b));
+})
+
 Test(TupleIsPoint,
 {
     Tuple a = { 4.3f, -4.2f, 3.1f, 1.0f };
@@ -58,11 +74,30 @@ Test(CreateVector,
     AssertTrue(TupleIsEqual(a, b));
 })
 
+Test(Black,
+{
+    Color a = Black();
+    AssertTrue(ColorIsEqual(a, (Color){ 0.0f, 0.0f, 0.0f }));
+})
+
+Test(White,
+{
+    Color a = White();
+    AssertTrue(ColorIsEqual(a, (Color){ 1.0f, 1.0f, 1.0f }));
+})
+
 Test(TupleAdd,
 {
     Tuple a = { 3.0f, -2.0f, 5.0f, 1.0f };
     Tuple b = { -2.0f, 3.0f, 1.0f, 0.0f };
     AssertTrue(TupleIsEqual(TupleAdd(a, b), (Tuple){ 1.0f, 1.0f, 6.0f, 1.0f }));
+})
+
+Test(ColorAdd,
+{
+    Color a = { 3.0f, -2.0f, 5.0f };
+    Color b = { -2.0f, 3.0f, 1.0f };
+    AssertTrue(ColorIsEqual(ColorAdd(a, b), (Color){ 1.0f, 1.0f, 6.0f }));
 })
 
 Test(TupleSub,
@@ -80,6 +115,23 @@ Test(TupleSub,
     a = VectorZero();
     b = CreateVector(1.0f, -2.0f, 3.0f);
     AssertTrue(TupleIsEqual(TupleSub(a, b), CreateVector(-1.0f, 2.0f, -3.0f)));
+})
+
+Test(ColorSub,
+{
+    Color a = { 3.0f, 2.0f, 1.0f };
+    Color b = { 5.0f, 6.0f, 7.0f };
+    AssertTrue(ColorIsEqual(ColorSub(a, b), (Color){ -2.0f, -4.0f, -6.0f }));
+
+    b = (Color){ 5.0f, 6.0f, 7.0f };
+    AssertTrue(ColorIsEqual(ColorSub(a, b), (Color){ -2.0f, -4.0f, -6.0f }));
+
+    a = (Color){ 3.0f, 2.0f, 1.0f };
+    AssertTrue(ColorIsEqual(ColorSub(a, b), (Color){ -2.0f, -4.0f, -6.0f }));
+
+    a = Black();
+    b = (Color){ 1.0f, -2.0f, 3.0f };
+    AssertTrue(ColorIsEqual(ColorSub(a, b), (Color){ -1.0f, 2.0f, -3.0f }));
 })
 
 Test(PointZero,
@@ -106,6 +158,23 @@ Test(TupleMulScalar,
 
     scalar = 0.5f;
     AssertTrue(TupleIsEqual(TupleMulScalar(a, scalar), (Tuple){ 0.5f, -1.0f, 1.5f, -2.0f }));
+})
+
+Test(ColorMulScalar,
+{
+    Color a = { 1.0f, -2.0f, 3.0f };
+    float scalar = 3.5f;
+    AssertTrue(ColorIsEqual(ColorMulScalar(a, scalar), (Color){ 3.5f, -7.0f, 10.5f }));
+
+    scalar = 0.5f;
+    AssertTrue(ColorIsEqual(ColorMulScalar(a, scalar), (Color){ 0.5f, -1.0f, 1.5f }));
+})
+
+Test(ColorMul,
+{
+    Color a = { 1.0f, 0.2f, 0.4f };
+    Color b = { 0.9f, 1.0f, 0.1f };
+    AssertTrue(ColorIsEqual(ColorMul(a, b), (Color){ 0.9f, 0.2f, 0.04f }));
 })
 
 Test(TupleDivScalar,
@@ -162,16 +231,23 @@ Test(VectorCross,
 void AddTupleTests(void)
 {
     AddUnitTest(TestTupleIsEqual);
+    AddUnitTest(TestColorIsEqual);
     AddUnitTest(TestTupleIsPoint);
     AddUnitTest(TestTupleIsVector);
     AddUnitTest(TestCreatePoint);
     AddUnitTest(TestCreateVector);
+    AddUnitTest(TestBlack);
+    AddUnitTest(TestWhite);
     AddUnitTest(TestTupleAdd);
+    AddUnitTest(TestColorAdd);
     AddUnitTest(TestTupleSub);
+    AddUnitTest(TestColorSub);
     AddUnitTest(TestPointZero);
     AddUnitTest(TestVectorZero);
     AddUnitTest(TestTupleNegate);
     AddUnitTest(TestTupleMulScalar);
+    AddUnitTest(TestColorMulScalar);
+    AddUnitTest(TestColorMul);
     AddUnitTest(TestTupleDivScalar);
     AddUnitTest(TestVectorMagnitude);
     AddUnitTest(TestVectorNormalize);
