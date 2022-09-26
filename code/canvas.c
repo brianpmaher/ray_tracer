@@ -1,9 +1,12 @@
+#pragma warning(disable: 4996) // Unsafe function.
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 #include "./canvas.h"
 #include "./unit_test.h"
+#include "./trace_log.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                 Functions
@@ -31,23 +34,30 @@ static char *CanvasToPPM(Canvas canvas)
     const int initialSizeEst = canvas.width * canvas.height * 16 + headerSizeEst;
     char scratchBuffer[32];
 
+    int bytesWritten = 0;
     char *ppmData = malloc(sizeof(initialSizeEst));
 
-    // Build header.
+    // Build PPM header.
     strcat(ppmData, "P3\n");
-    sprintf(scratchBuffer, "%d %d\n", canvas.width, canvas.height);
+    bytesWritten += 3;
+    bytesWritten += sprintf(scratchBuffer, "%d %d\n", canvas.width, canvas.height);
     strcat(ppmData, scratchBuffer);
     strcat(ppmData, "255\n");
+    bytesWritten += 4;
 
-    // Build body.
+    // Build PPM body.
     for (int y = 0; y < canvas.height; y++)
     {
         for (int x = 0; x < canvas.width; x++)
         {
             Color pixel = GetPixel(canvas, x, y);
             // TODO: map rgb from 0-1 to 0-255
-            sprintf(scratchBuffer, "%d %d %d", pixel.r, pixel.g, pixel.b);
+            int red = (int)Clamp(Lerp(0.0f, 255.0f, pixel.r), 0.0f, 255.0f);
+            int green = (int)Clamp(Lerp(0.0f, 255.0f, pixel.g), 0.0f, 255.0f);
+            int blue = (int)Clamp(Lerp(0.0f, 255.0f, pixel.b), 0.0f, 255.0f);
+            sprintf(scratchBuffer, "%d %d %d", red, green, blue);
             strcat(ppmData, scratchBuffer);
+            strcat(ppmData, "\n");
 
             if (x % canvas.width == 0)
                 strcat(ppmData, "\n");
@@ -55,6 +65,8 @@ static char *CanvasToPPM(Canvas canvas)
 
         strcat(ppmData, "\n");
     }
+
+    ppmData = realloc(ppmData, strlen(ppmData));
 
     return ppmData;
 }

@@ -5,6 +5,7 @@ rem                                    Config
 rem ////////////////////////////////////////////////////////////////////////////////
 
 set runUnitTests=1
+set debugBuild=1
 
 rem ////////////////////////////////////////////////////////////////////////////////
 
@@ -29,8 +30,23 @@ mkdir build
 set defines=
 if %runUnitTests% == 1 set defines=/DRUN_UNIT_TESTS
 
-call cl /nologo /W3 /Fe:build\ray_tracer.exe /std:c11 code\*.c %defines%
+set flags=/nologo /W3 /Fe:build\ray_tracer.exe /std:c11
+if %debugBuild% == 1 (
+    set flags=%flags% /Zi /Od
+) else (
+    set flags=%flags% /03
+)
+
+call cl %flags% code\*.c %defines%
+
+move *.pdb build >nul 2>nul
 
 call del *.obj
 
-if %errorlevel% == 0 call build\ray_tracer.exe
+if %errorlevel% == 0 (
+    if %debugBuild% == 1 (
+        call remedybg build\ray_tracer.exe
+    ) else (
+        call build\ray_tracer.exe
+    )
+)

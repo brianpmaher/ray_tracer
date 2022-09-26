@@ -12,4 +12,9 @@ inline bool IsEqual(float a, float b)
 
 float Clamp(float value, float min, float max);
 
+inline float Lerp(float min, float max, float rate)
+{
+    return (max - min) * rate + min;
+}
+
 void AddMathTests(void);

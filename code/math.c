@@ -25,9 +25,16 @@ Test(Clamp,
     AssertTrue(IsEqual(Clamp(-1.0f, 0.0f, 10.0f), 0.0f));
 })
 
+Test(Lerp,
+{
+    AssertTrue(IsEqual(Lerp(1.0f, 9.0f, 1.0f), 9.0f));
+    AssertTrue(IsEqual(Lerp(1.0f, 9.0f, 0.0f), 1.0f));
+    AssertTrue(IsEqual(Lerp(1.0f, 9.0f, 0.5f), 5.0f));
+})
 
 void AddMathTests(void)
 {
     AddUnitTest(TestIsEqual);
     AddUnitTest(TestClamp);
+    AddUnitTest(TestLerp);
 }
