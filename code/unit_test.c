@@ -1,13 +1,14 @@
 #include "./trace_log.h"
 #include "./unit_test.h"
 
-#pragma warning(disable: 5045)
+#pragma warning(disable: 5045) // Spectre mitigation.
 
 #define MAX_UNIT_TESTS 1024
 
 static TestFunction unitTests[MAX_UNIT_TESTS];
 static int unitTestsCount = 0;
 static int numAssertions = 0;
+static bool testResult;
 
 void RunUnitTests(void)
 {
@@ -17,7 +18,8 @@ void RunUnitTests(void)
     DebugLog("Running Unit tests");
     for (int i = 0; i < unitTestsCount; i++)
     {
-        bool testResult = unitTests[i]();
+        testResult = true;
+        unitTests[i]();
 
         if (testResult == true)
             numTestsPassed++;
@@ -40,28 +42,24 @@ void AddUnitTest(TestFunction testFunction)
     unitTests[unitTestsCount++] = testFunction;
 }
 
-bool _AssertTrue(char *file, int line, bool value)
+void _AssertTrue(char *file, int line, bool value)
 {
     numAssertions++;
 
     if (value == false)
     {
         ErrorLog("Expected false to be true (%s::%d)", file, line);
-        return false;
+        testResult = false;
     }
-
-    return true;
 }
 
-bool _AssertFalse(char *file, int line, bool value)
+void _AssertFalse(char *file, int line, bool value)
 {
     numAssertions++;
 
     if (value == true)
     {
         ErrorLog("Expected true to be false (%s::%d)", file, line);
-        return false;
+        testResult = false;
     }
-
-    return true;
 }

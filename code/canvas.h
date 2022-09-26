@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "./tuple.h"
+#include "./color.h"
 
 typedef struct Canvas {
     int width;

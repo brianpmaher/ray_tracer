@@ -2,7 +2,7 @@
 
 #include "./math.h"
 #include "./unit_test.h"
-#include "./tuple.h"
+#include "./vector.h"
 #include "./trace_log.h"
 #include "./canvas.h"
 
@@ -23,38 +23,39 @@ int main(void)
 static void RunAllUnitTests(void)
 {
     AddMathTests();
-    AddTupleTests();
+    AddVectorTests();
+    AddColorTests();
     AddCanvasTests();
     RunUnitTests();
 }
 
 typedef struct Projectile {
-    Point position;
-    Vector velocity;
+    Vector3 position;
+    Vector3 velocity;
 } Projectile;
 
 typedef struct Environment {
-    Vector gravity;
-    Vector wind;
+    Vector3 gravity;
+    Vector3 wind;
 } Environment;
 
 static Projectile Tick(Environment environment, Projectile projectile)
 {
-    projectile.position = Add(projectile.position, projectile.velocity);
-    projectile.velocity = Add(Add(projectile.velocity, environment.gravity), environment.wind);
+    projectile.position = Vector3Add(projectile.position, projectile.velocity);
+    projectile.velocity = Vector3Add(Vector3Add(projectile.velocity, environment.gravity), environment.wind);
     return projectile;
 }
 
 static void RunCannonSim(void)
 {
     Projectile projectile = {
-        .position = CreatePoint(0.0f, 1.0f, 0.0f),
-        .velocity = Normalize(CreateVector(1.0f, 1.0f, 0.0f)),
+        .position = (Vector3){ 0.0f, 1.0f, 0.0f },
+        .velocity = Vector3Normalize((Vector3){ 1.0f, 1.0f, 0.0f }),
     };
 
     Environment environment = {
-        .gravity = CreateVector(0.0f, -0.1f, 0.0f),
-        .wind = CreateVector(-0.01f, 0.0f, 0.0f),
+        .gravity = (Vector3){ 0.0f, -0.1f, 0.0f },
+        .wind = (Vector3){ -0.01f, 0.0f, 0.0f },
     };
 
     InfoLog("Running cannon simulation.");

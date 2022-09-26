@@ -5,7 +5,7 @@
 
 #define EPSILON 0.0001f
 
-inline bool IsEqual(float a, float b)
+inline bool FloatEquals(float a, float b)
 {
     return fabsf(a - b) < EPSILON;
 }

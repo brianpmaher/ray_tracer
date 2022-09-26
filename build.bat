@@ -5,7 +5,7 @@ rem                                    Config
 rem ////////////////////////////////////////////////////////////////////////////////
 
 set runUnitTests=1
-set debugBuild=1
+set debugBuild=0
 
 rem ////////////////////////////////////////////////////////////////////////////////
 
@@ -34,7 +34,7 @@ set flags=/nologo /W3 /Fe:build\ray_tracer.exe /std:c11
 if %debugBuild% == 1 (
     set flags=%flags% /Zi /Od
 ) else (
-    set flags=%flags% /03
+    set flags=%flags% /O2
 )
 
 call cl %flags% code\*.c %defines%
@@ -45,7 +45,7 @@ call del *.obj
 
 if %errorlevel% == 0 (
     if %debugBuild% == 1 (
-        call remedybg build\ray_tracer.exe
+        call remedybg debug.rdbg
     ) else (
         call build\ray_tracer.exe
     )
