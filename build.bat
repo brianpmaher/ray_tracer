@@ -5,6 +5,7 @@ rem                                    Config
 rem ////////////////////////////////////////////////////////////////////////////////
 
 set runUnitTests=1
+set runRayTracer=1
 set debugBuild=0
 
 rem ////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +29,8 @@ if exist build call rmdir /s /q build
 mkdir build
 
 set defines=
-if %runUnitTests% == 1 set defines=/DRUN_UNIT_TESTS
+if %runUnitTests% == 1 set defines=%defines% /DRUN_UNIT_TESTS
+if %runRayTracer% == 1 set defines=%defines% /DRUN_RAY_TRACER
 
 set flags=/nologo /W3 /Fe:build\ray_tracer.exe /std:c11
 if %debugBuild% == 1 (

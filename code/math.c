@@ -1,6 +1,5 @@
 #pragma warning(disable: 5045) // Not bounds-checking.
 
-#include "./unit_test.h"
 #include "./math.h"
 
 float Clamp(float value, float min, float max)
@@ -13,6 +12,8 @@ float Clamp(float value, float min, float max)
 ////////////////////////////////////////////////////////////////////////////////
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
+
+#include "./unit_test.h"
 
 static void TestFloatEquals(void)
 {

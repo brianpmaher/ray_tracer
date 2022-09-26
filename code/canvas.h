@@ -27,6 +27,6 @@ inline void SetPixel(Canvas *canvas, int x, int y, Color pixel)
     canvas->pixels[x + y * canvas->width] = pixel;
 }
 
-void WritePPM(Canvas canvas);
+void WritePPM(Canvas canvas, const char *fileName);
 
 void AddCanvasTests(void);
