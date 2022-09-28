@@ -32,12 +32,14 @@ static inline int ColorFloatToInt(float v)
  */
 static char *CanvasToPPM(Canvas canvas)
 {
-    const int headerSizeEst = 32;
-    const int initialSizeEst = canvas.width * canvas.height * 16 + headerSizeEst;
-    char scratchBuffer[32];
+    const int headerSizeEst = 32;            // Enough space for header.
+    const int maxColorPartSize = 3;          // length of "255"
+    const int numColorParts = 3;             // r, g, b
+    const int numSpacesAroundColorParts = 4; // num spaces in " 255 255 255 "
+    const int maxColorSize = maxColorPartSize * numColorParts + numSpacesAroundColorParts;
+    const int initialSizeEst = canvas.width * canvas.height * maxColorSize + headerSizeEst;
 
     int bytesWritten = 0;
-    int scratchBytesWritten = 0;
     char *ppmData = malloc(initialSizeEst);
 
     ////////////////////////////////////////
@@ -46,9 +48,7 @@ static char *CanvasToPPM(Canvas canvas)
 
     strcpy(ppmData, "P3\n");
     bytesWritten += 3;
-    scratchBytesWritten = sprintf(scratchBuffer, "%d %d\n", canvas.width, canvas.height);
-    strcpy(&ppmData[bytesWritten], scratchBuffer);
-    bytesWritten += scratchBytesWritten;
+    bytesWritten += sprintf(&ppmData[bytesWritten], "%d %d\n", canvas.width, canvas.height);
     strcpy(&ppmData[bytesWritten], "255\n");
     bytesWritten += 4;
 
@@ -56,98 +56,57 @@ static char *CanvasToPPM(Canvas canvas)
     //             PPM body
     ////////////////////////////////////////
 
-    const int maxColorStrLen = 3;
+    const int ppmBodyStart = bytesWritten;
 
+    // First, fill a buffer with each color part, separated by spaces.
+    // Also, place newlines after each row.
     for (int y = 0; y < canvas.height; y++)
     {
-        if (y > 0)
+        for (int x = 0; x < canvas.width; x++)
         {
-            ppmData[bytesWritten++] = '\n';
-        }
+            if (x > 0)
+            {
+                ppmData[bytesWritten++] = ' ';
+            }
 
-        for (int x = 0, lineLength = 0; x < canvas.width; x++)
-        {
             Color pixel = GetPixel(canvas, x, y);
             int red = ColorFloatToInt(pixel.r);
             int green = ColorFloatToInt(pixel.g);
             int blue = ColorFloatToInt(pixel.b);
 
-            ////////////////////////////////////////
-            //                Red
-            ////////////////////////////////////////
-
-            if (lineLength > 0)
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, " %d", red);
-            }
-            else
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, "%d", red);
-            }
-
-            strcpy(&ppmData[bytesWritten], scratchBuffer);
-            bytesWritten += scratchBytesWritten;
-            lineLength += scratchBytesWritten;
-
-            if (lineLength + scratchBytesWritten + 1 >= 70)
-            {
-                ppmData[bytesWritten++] = '\n';
-                lineLength = 0;
-            }
-
-            ////////////////////////////////////////
-            //               Green
-            ////////////////////////////////////////
-
-            if (lineLength > 0)
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, " %d", green);
-            }
-            else
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, "%d", green);
-            }
-
-            strcpy(&ppmData[bytesWritten], scratchBuffer);
-            bytesWritten += scratchBytesWritten;
-            lineLength += scratchBytesWritten;
-
-            if (lineLength + scratchBytesWritten + 1 >= 70)
-            {
-                ppmData[bytesWritten++] = '\n';
-                lineLength = 0;
-            }
-
-            ////////////////////////////////////////
-            //               Blue
-            ////////////////////////////////////////
-
-            if (lineLength > 0)
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, " %d", blue);
-            }
-            else
-            {
-                scratchBytesWritten = sprintf(scratchBuffer, "%d", blue);
-            }
-
-            strcpy(&ppmData[bytesWritten], scratchBuffer);
-            bytesWritten += scratchBytesWritten;
-            lineLength += scratchBytesWritten;
-
-            if (lineLength + scratchBytesWritten + 1 >= 70 && x < (canvas.width - 1))
-            {
-                ppmData[bytesWritten++] = '\n';
-                lineLength = 0;
-            }
+            bytesWritten += sprintf(&ppmData[bytesWritten], "%d %d %d", red, green, blue);
         }
 
         ppmData[bytesWritten++] = '\n';
     }
 
-    ppmData[bytesWritten] = '\0';
-    bytesWritten += 1;
+    // Cap the buffer with null char and resize.
+    ppmData[bytesWritten++] = '\0';
     ppmData = realloc(ppmData, bytesWritten);
+
+    // Insert newlines to limit rows to 70 characters.
+    for (int i = ppmBodyStart, lineLength = 0; ppmData[i] != '\0'; i++, lineLength++)
+    {
+        if (lineLength == 70)
+        {
+            if (ppmData[i] == ' ')
+            {
+                ppmData[i] = '\n';
+            }
+            else // Data contains a number, need to move backwards to find previous space.
+            {
+                int j;
+                for (j = i; ppmData[j] != ' '; j--);
+                ppmData[j] = '\n';
+            }
+
+            lineLength = 0;
+        }
+        else if (ppmData[i] == '\n')
+        {
+            lineLength = 0;
+        }
+    }
 
     return ppmData;
 }
