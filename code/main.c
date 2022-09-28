@@ -54,7 +54,7 @@ static void RunCannonSim(void)
 
     Projectile projectile = {
         .position = (Vector3){ 0.0f, 1.0f, 0.0f },
-        .velocity = Vector3Normalize(Vector3MulScalar((Vector3){ 1.0f, 1.8f, 0.0f }, 11.25f)),
+        .velocity = Vector3MulScalar(Vector3Normalize((Vector3){ 1.0f, 1.8f, 0.0f }), 11.25f),
     };
 
     Environment environment = {
