@@ -1,9 +1,10 @@
 #include <stdio.h>
 
-#include "./math.h"
-#include "./unit_test.h"
-#include "./vector.h"
 #include "./trace_log.h"
+#include "./unit_test.h"
+#include "./math.h"
+#include "./vector.h"
+#include "./matrix.h"
 #include "./canvas.h"
 
 static void RunAllUnitTests(void);
@@ -26,6 +27,7 @@ static void RunAllUnitTests(void)
 {
     AddMathTests();
     AddVectorTests();
+    AddMatrixTests();
     AddColorTests();
     AddCanvasTests();
     RunUnitTests();
