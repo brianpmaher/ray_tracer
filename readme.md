@@ -1,7 +1,5 @@
 # Ray Tracer
 
-![Render](canvas.png)
-
 A toy ray tracer implementation in C.
 
 ## Setup
@@ -18,3 +16,9 @@ No setup for osX yet
 ### Linux
 
 No setup for linux yet
+
+## Renders
+
+### Rendering a cannon trajectory to test the canvas draw implementation and vector math
+
+![Render](images/cannon.png)
