@@ -6,6 +6,11 @@ bool Matrix2Equals(Matrix2 a, Matrix2 b)
            FloatEquals(a.m10, b.m10) && FloatEquals(a.m11, b.m11);
 }
 
+float Matrix2Determinant(Matrix2 a)
+{
+    return a.m00 * a.m11 - a.m01 * a.m10;
+}
+
 bool Matrix3Equals(Matrix3 a, Matrix3 b)
 {
     return FloatEquals(a.m00, b.m00) && FloatEquals(a.m01, b.m01) && FloatEquals(a.m02, b.m02) &&
@@ -124,6 +129,15 @@ static void TestMatrix2Equals()
     AssertFalse(Matrix2Equals(a, b));
 }
 
+static void TestMatrix2Determinant()
+{
+    Matrix2 a = {
+        1.0f, 5.0f,
+        -3.0f, 2.0f
+    };
+    AssertTrue(FloatEquals(Matrix2Determinant(a), 17.0f));
+}
+
 static void TestMatrix3Equals()
 {
     Matrix3 a = {
@@ -219,6 +233,7 @@ void AddMatrixTests()
     AddUnitTest(TestMatrix3);
     AddUnitTest(TestMatrix4);
     AddUnitTest(TestMatrix2Equals);
+    AddUnitTest(TestMatrix2Determinant);
     AddUnitTest(TestMatrix3Equals);
     AddUnitTest(TestMatrix4Equals);
     AddUnitTest(TestMatrix4Multiply);

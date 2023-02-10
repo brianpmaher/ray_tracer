@@ -1,6 +1,10 @@
-# Ray Tracer
+# WIP - Ray Tracer
 
 A toy ray tracer implementation in C.
+
+## Next
+
+Inverting Matrices
 
 ## Setup
 

@@ -40,6 +40,9 @@ struct Matrix4
 
 bool Matrix2Equals(Matrix2 a, Matrix2 b);
 
+// TODO: Implement
+float Matrix2Determinant(Matrix2 a);
+
 bool Matrix3Equals(Matrix3 a, Matrix3 b);
 
 // TODO: Implement
