@@ -28,7 +28,7 @@ void RunUnitTests()
     SetTraceLogLevel(LogLevel_Debug);
 
     DebugLog("%d / %d tests passed.", numTestsPassed, unitTestsCount);
-    DebugLog("%d assertions executed.", numAssertions);
+    DebugLog("%d assertions run.", numAssertions);
 }
 
 void AddUnitTest(TestFunction testFunction)
