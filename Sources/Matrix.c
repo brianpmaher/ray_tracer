@@ -1,12 +1,12 @@
-#include "./matrix.h"
+#include "Matrix.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "./unit_test.h"
+#include "UnitTest.h"
 
-static void TestMatrix2(void)
+static void TestMatrix2()
 {
     Matrix2 matrix = {
         -3.0f, 5.0f,
@@ -19,7 +19,7 @@ static void TestMatrix2(void)
     AssertTrue(FloatEquals(matrix.m11, -2.0f));
 }
 
-static void TestMatrix3(void)
+static void TestMatrix3()
 {
     Matrix3 matrix = {
         -3.0f,  5.0f,  0.0f,
@@ -32,7 +32,7 @@ static void TestMatrix3(void)
     AssertTrue(FloatEquals(matrix.m22, 1.0f));
 }
 
-static void TestMatrix4(void)
+static void TestMatrix4()
 {
     Matrix4 matrix = {
         1.0f,  2.0f,  3.0f,  4.0f,
@@ -50,7 +50,7 @@ static void TestMatrix4(void)
     AssertTrue(FloatEquals(matrix.m32, 15.5f));
 }
 
-static void TestMatrix2Equals(void)
+static void TestMatrix2Equals()
 {
     Matrix2 a = {
         1.0f, 2.0f,
@@ -68,7 +68,7 @@ static void TestMatrix2Equals(void)
     AssertFalse(Matrix2Equals(a, b));
 }
 
-void AddMatrixTests(void)
+void AddMatrixTests()
 {
     AddUnitTest(TestMatrix2);
     AddUnitTest(TestMatrix3);

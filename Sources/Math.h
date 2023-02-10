@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define EPSILON 0.0001f
+#define EPSILON (0.0001f)
 
 inline bool FloatEquals(float a, float b)
 {
@@ -17,4 +17,4 @@ inline float Lerp(float min, float max, float rate)
     return (max - min) * rate + min;
 }
 
-void AddMathTests(void);
+void AddMathTests();

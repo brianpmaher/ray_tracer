@@ -1,6 +1,6 @@
 #pragma warning(disable: 5045) // Not bounds-checking.
 
-#include "./math.h"
+#include "Math.h"
 
 float Clamp(float value, float min, float max)
 {
@@ -13,9 +13,9 @@ float Clamp(float value, float min, float max)
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "./unit_test.h"
+#include "UnitTest.h"
 
-static void TestFloatEquals(void)
+static void TestFloatEquals()
 {
     AssertTrue(FloatEquals(0.005f, 0.005f));
     AssertTrue(FloatEquals(-1.0f, -1.0f));
@@ -23,21 +23,21 @@ static void TestFloatEquals(void)
     AssertFalse(FloatEquals(-1.0f, 1.0f));
 }
 
-static void TestClamp(void)
+static void TestClamp()
 {
     AssertTrue(FloatEquals(Clamp(5.0f, 0.0f, 10.0f), 5.0f));
     AssertTrue(FloatEquals(Clamp(11.0f, 0.0f, 10.0f), 10.0f));
     AssertTrue(FloatEquals(Clamp(-1.0f, 0.0f, 10.0f), 0.0f));
 }
 
-static void TestLerp(void)
+static void TestLerp()
 {
     AssertTrue(FloatEquals(Lerp(1.0f, 9.0f, 1.0f), 9.0f));
     AssertTrue(FloatEquals(Lerp(1.0f, 9.0f, 0.0f), 1.0f));
     AssertTrue(FloatEquals(Lerp(1.0f, 9.0f, 0.5f), 5.0f));
 }
 
-void AddMathTests(void)
+void AddMathTests()
 {
     AddUnitTest(TestFloatEquals);
     AddUnitTest(TestClamp);

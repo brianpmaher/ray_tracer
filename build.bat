@@ -4,9 +4,18 @@ rem ////////////////////////////////////////////////////////////////////////////
 rem                                    Config
 rem ////////////////////////////////////////////////////////////////////////////////
 
-set runUnitTests=1
+set runUnitTests=0
 set runRayTracer=0
 set debugBuild=0
+
+:configLoop
+if "%1"=="" goto endConfigLoop
+if "%1"=="-t" set runUnitTests=1
+if "%1"=="-r" set runRayTracer=1
+if "%1"=="-d" set debugBuild=1
+shift
+goto configLoop
+:endConfigLoop
 
 rem ////////////////////////////////////////////////////////////////////////////////
 
@@ -24,24 +33,24 @@ if not %errorlevel% == 0 (
     exit /b 1
 )
 
-if exist build call rmdir /s /q build
+if exist _Build call rmdir /s /q _Build
 
-mkdir build
+mkdir _Build
 
 set defines=
 if %runUnitTests% == 1 set defines=%defines% /DRUN_UNIT_TESTS
 if %runRayTracer% == 1 set defines=%defines% /DRUN_RAY_TRACER
 
-set flags=/nologo /W3 /Fe:build\ray_tracer.exe /std:c11
+set flags=/nologo /W3 /Fe:_Build\ray_tracer.exe /std:c11
 if %debugBuild% == 1 (
     set flags=%flags% /Zi /Od
 ) else (
     set flags=%flags% /O2
 )
 
-call cl %flags% code\*.c %defines%
+call cl %flags% Sources\*.c %defines%
 
-move *.pdb build >nul 2>nul
+move *.pdb _Build >nul 2>nul
 
 call del *.obj
 
@@ -49,6 +58,6 @@ if %errorlevel% == 0 (
     if %debugBuild% == 1 (
         call remedybg debug.rdbg
     ) else (
-        call build\ray_tracer.exe
+        call _Build\ray_tracer.exe
     )
 )

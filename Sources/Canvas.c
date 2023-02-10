@@ -1,11 +1,11 @@
 #pragma warning(disable: 4996) // Unsafe function.
 
+#include "Canvas.h"
+#include "TraceLog.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
-#include "./canvas.h"
-#include "./trace_log.h"
 
 Canvas CreateCanvas(int width, int height)
 {
@@ -140,9 +140,9 @@ void WritePPM(Canvas canvas, const char *fileName)
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "./unit_test.h"
+#include "UnitTest.h"
 
-static void TestCreateCanvas(void)
+static void TestCreateCanvas()
 {
     Canvas c = CreateCanvas(10, 20);
     AssertTrue(c.width == 10);
@@ -154,7 +154,7 @@ static void TestCreateCanvas(void)
     FreeCanvasMemory(c);
 }
 
-static void TestGetPixel(void)
+static void TestGetPixel()
 {
     Canvas c = CreateCanvas(10, 20);
     Color red = { 1.0f, 0.0f, 0.0f };
@@ -164,7 +164,7 @@ static void TestGetPixel(void)
     AssertTrue(ColorEquals(GetPixel(c, 0, 1), red));
 }
 
-static void TestSetPixel(void)
+static void TestSetPixel()
 {
     Canvas c = CreateCanvas(10, 20);
     Color red = { 1.0f, 0.0f, 0.0f };
@@ -172,7 +172,7 @@ static void TestSetPixel(void)
     AssertTrue(ColorEquals(GetPixel(c, 2, 3), red));
 }
 
-static void TestCanvasToPPM(void)
+static void TestCanvasToPPM()
 {
     Canvas c = CreateCanvas(5, 3);
     SetPixel(&c, 0, 0, (Color){  1.5f, 0.0f, 0.0f });
@@ -222,7 +222,7 @@ static void TestCanvasToPPM(void)
     FreeCanvasMemory(c);
 }
 
-void AddCanvasTests(void)
+void AddCanvasTests()
 {
     AddUnitTest(TestCreateCanvas);
     AddUnitTest(TestGetPixel);

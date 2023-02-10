@@ -1,14 +1,17 @@
 #pragma once
 
-#include "./math.h"
+#include "Math.h"
 
 #include <stdbool.h>
 
-typedef struct Vector3 {
+typedef struct Vector3 Vector3;
+
+struct Vector3
+{
     float x;
     float y;
     float z;
-} Vector3;
+};
 
 inline bool Vector3Equals(Vector3 a, Vector3 b)
 {
@@ -25,7 +28,7 @@ inline Vector3 Vector3Sub(Vector3 a, Vector3 b)
     return (Vector3){ a.x - b.x, a.y - b.y, a.z - b.z };
 }
 
-inline Vector3 Vector3Zero(void)
+inline Vector3 Vector3Zero()
 {
     return (Vector3){ 0.0f, 0.0f, 0.0f };
 }
@@ -67,4 +70,4 @@ inline Vector3 Vector3Cross(Vector3 a, Vector3 b)
     return (Vector3){ a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x };
 }
 
-void AddVectorTests(void);
+void AddVectorTests();

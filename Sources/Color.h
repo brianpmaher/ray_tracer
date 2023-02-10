@@ -1,17 +1,19 @@
 #pragma once
 
-#include "./math.h"
+#include "Math.h"
 
 #include <stdbool.h>
 
-typedef struct Color {
+typedef struct Color Color;
+
+struct Color
+{
     float r;
     float g;
     float b;
-} Color;
+};
 
 #define BLACK (Color){ 0.0f, 0.0f, 0.0f }
-
 #define WHITE (Color){ 1.0f, 1.0f, 1.0f }
 
 inline bool ColorEquals(Color a, Color b)
@@ -39,4 +41,4 @@ inline Color ColorMul(Color a, Color b)
     return (Color){ a.r * b.r, a.g * b.g, a.b * b.b };
 }
 
-void AddColorTests(void);
+void AddColorTests();

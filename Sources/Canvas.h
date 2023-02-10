@@ -1,14 +1,17 @@
 #pragma once
 
+#include "Color.h"
+
 #include <stdlib.h>
 
-#include "./color.h"
+typedef struct Canvas Canvas;
 
-typedef struct Canvas {
+struct Canvas
+{
     int width;
     int height;
     Color *pixels;
-} Canvas;
+};
 
 Canvas CreateCanvas(int width, int height);
 

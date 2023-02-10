@@ -1,16 +1,16 @@
+#include "TraceLog.h"
+#include "UnitTest.h"
+#include "Math.h"
+#include "Vector.h"
+#include "Matrix.h"
+#include "Canvas.h"
+
 #include <stdio.h>
 
-#include "./trace_log.h"
-#include "./unit_test.h"
-#include "./math.h"
-#include "./vector.h"
-#include "./matrix.h"
-#include "./canvas.h"
+static void RunAllUnitTests();
+static void RunRayTracer();
 
-static void RunAllUnitTests(void);
-static void RunRayTracer(void);
-
-int main(void)
+int main()
 {
 #ifdef RUN_UNIT_TESTS
     RunAllUnitTests();
@@ -23,7 +23,7 @@ int main(void)
     return 0;
 }
 
-static void RunAllUnitTests(void)
+static void RunAllUnitTests()
 {
     AddMathTests();
     AddVectorTests();
@@ -33,15 +33,20 @@ static void RunAllUnitTests(void)
     RunUnitTests();
 }
 
-typedef struct Projectile {
+typedef struct Projectile Projectile;
+typedef struct Environment Environment;
+
+struct Projectile
+{
     Vector3 position;
     Vector3 velocity;
-} Projectile;
+};
 
-typedef struct Environment {
+struct Environment
+{
     Vector3 gravity;
     Vector3 wind;
-} Environment;
+};
 
 static Projectile Tick(Environment environment, Projectile projectile)
 {
@@ -50,9 +55,9 @@ static Projectile Tick(Environment environment, Projectile projectile)
     return projectile;
 }
 
-static void RunCannonSim(void)
+static void RunCannonSim()
 {
-    SetTraceLogLevel(LOG_DEBUG);
+    SetTraceLogLevel(LogLevel_Debug);
 
     Projectile projectile = {
         .position = (Vector3){ 0.0f, 1.0f, 0.0f },
@@ -92,7 +97,7 @@ static void RunCannonSim(void)
     FreeCanvasMemory(canvas);
 }
 
-static void RunRayTracer(void)
+static void RunRayTracer()
 {
     RunCannonSim();
 }

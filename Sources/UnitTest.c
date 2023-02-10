@@ -1,7 +1,7 @@
-#include "./trace_log.h"
-#include "./unit_test.h"
-
 #pragma warning(disable: 5045) // Spectre mitigation.
+
+#include "TraceLog.h"
+#include "UnitTest.h"
 
 #define MAX_UNIT_TESTS 1024
 
@@ -10,7 +10,7 @@ static int unitTestsCount = 0;
 static int numAssertions = 0;
 static bool testResult;
 
-void RunUnitTests(void)
+void RunUnitTests()
 {
     int numTestsPassed = 0;
     numAssertions = 0;
@@ -25,7 +25,7 @@ void RunUnitTests(void)
             numTestsPassed++;
     }
 
-    SetTraceLogLevel(LOG_DEBUG);
+    SetTraceLogLevel(LogLevel_Debug);
 
     DebugLog("%d / %d tests passed.", numTestsPassed, unitTestsCount);
     DebugLog("%d assertions executed.", numAssertions);
@@ -42,7 +42,7 @@ void AddUnitTest(TestFunction testFunction)
     unitTests[unitTestsCount++] = testFunction;
 }
 
-void _AssertTrue(char *file, int line, bool value)
+void AssertTrue_(char *file, int line, bool value)
 {
     numAssertions++;
 
@@ -53,7 +53,7 @@ void _AssertTrue(char *file, int line, bool value)
     }
 }
 
-void _AssertFalse(char *file, int line, bool value)
+void AssertFalse_(char *file, int line, bool value)
 {
     numAssertions++;
 

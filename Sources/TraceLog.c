@@ -1,9 +1,9 @@
+#include "TraceLog.h"
+
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "./trace_log.h"
-
-static LogLevel logLevel = LOG_INFO;
+static LogLevel logLevel = LogLevel_Info;
 
 void SetTraceLogLevel(LogLevel logLevel_)
 {
@@ -20,16 +20,16 @@ void TraceLog(LogLevel logLevel_, char *format, ...)
 
     switch (logLevel_)
     {
-    case LOG_DEBUG:
+    case LogLevel_Debug:
         printf("DEBUG: ");
         break;
-    case LOG_INFO:
+    case LogLevel_Info:
         printf("INFO: ");
         break;
-    case LOG_WARN:
+    case LogLevel_Warn:
         printf("WARN: ");
         break;
-    case LOG_ERROR:
+    case LogLevel_Error:
         printf("ERROR: ");
         break;
     }

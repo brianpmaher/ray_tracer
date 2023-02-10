@@ -1,26 +1,33 @@
 #pragma once
 
+#include "Math.h"
+
 #include <stdbool.h>
 
-#include "./math.h"
+typedef struct Matrix2 Matrix2;
+typedef struct Matrix3 Matrix3;
+typedef struct Matrix4 Matrix4;
 
-typedef struct Matrix2 {
+struct Matrix2
+{
     float m00, m01;
     float m10, m11;
-} Matrix2;
+};
 
-typedef struct Matrix3 {
+struct Matrix3
+{
     float m00, m01, m02;
     float m10, m11, m12;
     float m20, m21, m22;
-} Matrix3;
+};
 
-typedef struct Matrix4 {
+struct Matrix4
+{
     float m00, m01, m02, m03;
     float m10, m11, m12, m13;
     float m20, m21, m22, m23;
     float m30, m31, m32, m33;
-} Matrix4;
+};
 
 inline bool Matrix2Equals(Matrix2 a, Matrix2 b)
 {
@@ -40,4 +47,4 @@ inline bool Matrix4Equals(Matrix4 a, Matrix4 b)
     return false;
 }
 
-void AddMatrixTests(void);
+void AddMatrixTests();

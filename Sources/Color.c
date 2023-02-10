@@ -1,12 +1,12 @@
-#include "./color.h"
+#include "Color.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "./unit_test.h"
+#include "UnitTest.h"
 
-static void TestColorIsEqual(void)
+static void TestColorIsEqual()
 {
     Color a = { 4.3f, -4.2f, 3.1f };
     Color b = { 4.3f, -4.2f, 3.1f };
@@ -22,14 +22,14 @@ static void TestColorIsEqual(void)
     AssertFalse(ColorEquals(a, b));
 }
 
-static void TestColorAdd(void)
+static void TestColorAdd()
 {
     Color a = { 3.0f, -2.0f, 5.0f };
     Color b = { -2.0f, 3.0f, 1.0f };
     AssertTrue(ColorEquals(ColorAdd(a, b), (Color){ 1.0f, 1.0f, 6.0f }));
 }
 
-static void TestColorSub(void)
+static void TestColorSub()
 {
     Color a = { 3.0f, 2.0f, 1.0f };
     Color b = { 5.0f, 6.0f, 7.0f };
@@ -40,7 +40,7 @@ static void TestColorSub(void)
     AssertTrue(ColorEquals(ColorSub(a, b), (Color){ -1.0f, 2.0f, -3.0f }));
 }
 
-static void TestColorMulScalar(void)
+static void TestColorMulScalar()
 {
     Color a = { 1.0f, -2.0f, 3.0f };
     float scalar = 3.5f;
@@ -50,14 +50,14 @@ static void TestColorMulScalar(void)
     AssertTrue(ColorEquals(ColorMulScalar(a, scalar), (Color){ 0.5f, -1.0f, 1.5f }));
 }
 
-static void TestColorMul(void)
+static void TestColorMul()
 {
     Color a = { 1.0f, 0.2f, 0.4f };
     Color b = { 0.9f, 1.0f, 0.1f };
     AssertTrue(ColorEquals(ColorMul(a, b), (Color){ 0.9f, 0.2f, 0.04f }));
 }
 
-void AddColorTests(void)
+void AddColorTests()
 {
     AddUnitTest(TestColorIsEqual);
     AddUnitTest(TestColorAdd);

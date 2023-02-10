@@ -1,14 +1,14 @@
-#include <stdbool.h>
+#include "Vector.h"
 
-#include "./vector.h"
+#include <stdbool.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                  Tests
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "./unit_test.h"
+#include "UnitTest.h"
 
-static void TestVector3Equals(void)
+static void TestVector3Equals()
 {
     Vector3 a = { 4.3f, -4.2f, 3.1f };
     Vector3 b = { 4.3f, -4.2f, 3.1f };
@@ -21,14 +21,14 @@ static void TestVector3Equals(void)
     AssertFalse(Vector3Equals(a, b));
 }
 
-static void TestVector3Add(void)
+static void TestVector3Add()
 {
     Vector3 a = { 3.0f, -2.0f, 5.0f };
     Vector3 b = { -2.0f, 3.0f, 1.0f };
     AssertTrue(Vector3Equals(Vector3Add(a, b), (Vector3){ 1.0f, 1.0f, 6.0f }));
 }
 
-static void TestVector3Sub(void)
+static void TestVector3Sub()
 {
     Vector3 a = { 3.0f, 2.0f, 1.0f };
     Vector3 b = { 5.0f, 6.0f, 7.0f };
@@ -39,18 +39,18 @@ static void TestVector3Sub(void)
     AssertTrue(Vector3Equals(Vector3Sub(a, b), (Vector3){ -1.0f, 2.0f, -3.0f }));
 }
 
-static void TestVector3Zero(void)
+static void TestVector3Zero()
 {
     AssertTrue(Vector3Equals(Vector3Zero(), (Vector3){ 0.0f, 0.0f, 0.0f }));
 }
 
-static void TestVector3Negate(void)
+static void TestVector3Negate()
 {
     Vector3 a = { 1.0f, -2.0f, 3.0f };
     AssertTrue(Vector3Equals(Vector3Negate(a), (Vector3){ -1.0f, 2.0f, -3.0f }));
 }
 
-static void TestVector3MulScalar(void)
+static void TestVector3MulScalar()
 {
     Vector3 a = { 1.0f, -2.0f, 3.0f };
     float scalar = 3.5f;
@@ -60,14 +60,14 @@ static void TestVector3MulScalar(void)
     AssertTrue(Vector3Equals(Vector3MulScalar(a, scalar), (Vector3){ 0.5f, -1.0f, 1.5f }));
 }
 
-static void TestVector3DivScalar(void)
+static void TestVector3DivScalar()
 {
     Vector3 a = { 1.0f, -2.0f, 3.0f };
     float scalar = 2;
     AssertTrue(Vector3Equals(Vector3DivScalar(a, scalar), (Vector3){ 0.5f, -1.0f, 1.5f }));
 }
 
-static void TestVector3Magnitude(void)
+static void TestVector3Magnitude()
 {
     Vector3 a = { 1.0f, 0.0f, 0.0f };
     AssertTrue(FloatEquals(Vector3Magnitude(a), 1.0f));
@@ -85,7 +85,7 @@ static void TestVector3Magnitude(void)
     AssertTrue(FloatEquals(Vector3Magnitude(a), sqrtf(14)));
 }
 
-static void TestVector3Normalize(void)
+static void TestVector3Normalize()
 {
     Vector3 a = { 4.0f, 0.0f, 0.0f };
     AssertTrue(Vector3Equals(Vector3Normalize(a), (Vector3){ 1.0f, 0.0f, 0.0f }));
@@ -96,14 +96,14 @@ static void TestVector3Normalize(void)
     AssertTrue(FloatEquals(Vector3Magnitude(Vector3Normalize(a)), 1.0f));
 }
 
-static void TestVector3Dot(void)
+static void TestVector3Dot()
 {
     Vector3 a = (Vector3){ 1.0f, 2.0f, 3.0f };
     Vector3 b = (Vector3){ 2.0f, 3.0f, 4.0f };
     AssertTrue(FloatEquals(Vector3Dot(a, b), 20.0f));
 }
 
-static void TestVector3Cross(void)
+static void TestVector3Cross()
 {
     Vector3 a = (Vector3){ 1.0f, 2.0f, 3.0f };
     Vector3 b = (Vector3){ 2.0f, 3.0f, 4.0f };
@@ -111,7 +111,7 @@ static void TestVector3Cross(void)
     AssertTrue(Vector3Equals(Vector3Cross(b, a), (Vector3){ 1.0f, -2.0f, 1.0f }));
 }
 
-void AddVectorTests(void)
+void AddVectorTests()
 {
     AddUnitTest(TestVector3Equals);
     AddUnitTest(TestVector3Add);

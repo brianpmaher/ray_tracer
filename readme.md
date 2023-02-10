@@ -21,4 +21,4 @@ No setup for linux yet
 
 ### Rendering a cannon trajectory to test the canvas draw implementation and vector math
 
-![Render](images/cannon.png)
+![Render](Renders/cannon.png)
