@@ -68,10 +68,57 @@ static void TestMatrix2Equals()
     AssertFalse(Matrix2Equals(a, b));
 }
 
+static void TestMatrix3Equals()
+{
+    Matrix3 a = {
+        1.0f, 2.0f, 3.0f,
+        5.0f, 6.0f, 7.0f,
+        9.0f, 10.0f, 11.0f
+    };
+    Matrix3 b = {
+        1.0f, 2.0f, 3.0f,
+        5.0f, 6.0f, 7.0f,
+        9.0f, 10.0f, 11.0f
+    };
+    AssertTrue(Matrix3Equals(a, b));
+    b = (Matrix3){
+        5.0f, 2.0f, 3.0f,
+        5.0f, 6.0f, 7.0f,
+        9.0f, 10.0f, 11.0f
+    };
+    AssertFalse(Matrix3Equals(a, b));
+}
+
+static void TestMatrix4Equals()
+{
+    Matrix4 a = {
+        1.0f, 2.0f, 3.0f, 4.0f,
+        5.0f, 6.0f, 7.0f, 8.0f,
+        9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f
+    };
+    Matrix4 b = {
+        1.0f, 2.0f, 3.0f, 4.0f,
+        5.0f, 6.0f, 7.0f, 8.0f,
+        9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f
+    };
+    AssertTrue(Matrix4Equals(a, b));
+    b = (Matrix4){
+        5.0f, 2.0f, 3.0f, 4.0f,
+        5.0f, 6.0f, 7.0f, 8.0f,
+        9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f
+    };
+    AssertFalse(Matrix4Equals(a, b));
+}
+
 void AddMatrixTests()
 {
     AddUnitTest(TestMatrix2);
     AddUnitTest(TestMatrix3);
     AddUnitTest(TestMatrix4);
     AddUnitTest(TestMatrix2Equals);
+    AddUnitTest(TestMatrix3Equals);
+    AddUnitTest(TestMatrix4Equals);
 }

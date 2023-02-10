@@ -37,14 +37,17 @@ inline bool Matrix2Equals(Matrix2 a, Matrix2 b)
 
 inline bool Matrix3Equals(Matrix3 a, Matrix3 b)
 {
-    // TODO: Implement
-    return false;
+    return FloatEquals(a.m00, b.m00) && FloatEquals(a.m01, b.m01) && FloatEquals(a.m02, b.m02) &&
+           FloatEquals(a.m10, b.m10) && FloatEquals(a.m11, b.m11) && FloatEquals(a.m12, b.m12) &&
+           FloatEquals(a.m20, b.m20) && FloatEquals(a.m21, b.m21) && FloatEquals(a.m22, b.m22);
 }
 
 inline bool Matrix4Equals(Matrix4 a, Matrix4 b)
 {
-    // TODO: Implement
-    return false;
+    return FloatEquals(a.m00, b.m00) && FloatEquals(a.m01, b.m01) && FloatEquals(a.m02, b.m02) && FloatEquals(a.m03, b.m03) &&
+           FloatEquals(a.m10, b.m10) && FloatEquals(a.m11, b.m11) && FloatEquals(a.m12, b.m12) && FloatEquals(a.m13, b.m13) &&
+           FloatEquals(a.m20, b.m20) && FloatEquals(a.m21, b.m21) && FloatEquals(a.m22, b.m22) && FloatEquals(a.m23, b.m23) &&
+           FloatEquals(a.m30, b.m30) && FloatEquals(a.m31, b.m31) && FloatEquals(a.m32, b.m32) && FloatEquals(a.m33, b.m33);
 }
 
 void AddMatrixTests();
