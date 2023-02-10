@@ -42,10 +42,37 @@ bool Matrix2Equals(Matrix2 a, Matrix2 b);
 
 bool Matrix3Equals(Matrix3 a, Matrix3 b);
 
+// TODO: Implement
+float Matrix3Determinant(Matrix3 a);
+
+// TODO: Implement
+Matrix2 Matrix3Submatrix(Matrix3 a, int row, int column);
+
+// TODO: Implement
+float Matrix3Minor(Matrix3 a, int row, int column);
+
+// TODO: Implement
+float Matrix3Cofactor(Matrix3 a, int row, int column);
+
 bool Matrix4Equals(Matrix4 a, Matrix4 b);
 
 Matrix4 Matrix4Multiply(Matrix4 a, Matrix4 b);
 
 Matrix4 Matrix4Transpose(Matrix4 a);
+
+// TODO: Implement
+Matrix4 Matrix4Invert(Matrix4 a);
+
+// TODO: Implement
+float Matrix4Determinant(Matrix4 a);
+
+// TODO: Implement
+Matrix3 Matrix4Submatrix(Matrix4 a, int row, int column);
+
+// TODO: Implement
+float Matrix4Minor(Matrix4 a, int row, int column);
+
+// TODO: Implement
+float Matrix4Cofactor(Matrix4 a, int row, int column);
 
 void AddMatrixTests();
